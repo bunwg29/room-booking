@@ -15,7 +15,7 @@ const toMinutes = (time: string) => {
 export const bookingsConflict = (candidate: Booking, existing: Booking) =>
   candidate.roomId === existing.roomId &&
   candidate.date === existing.date &&
-  existing.status === 'CONFIRMED' &&
+  existing.status !== 'CANCELLED' &&
   toMinutes(candidate.startTime) < toMinutes(existing.endTime) &&
   toMinutes(candidate.endTime) > toMinutes(existing.startTime);
 
@@ -32,7 +32,7 @@ export const isSlotOccupied = (
     (booking) =>
       booking.roomId === roomId &&
       booking.date === date &&
-      booking.status === 'CONFIRMED' &&
+      booking.status !== 'CANCELLED' &&
       toMinutes(slot.startTime) < toMinutes(booking.endTime) &&
       toMinutes(slot.endTime) > toMinutes(booking.startTime),
   );
@@ -55,4 +55,33 @@ export const formatCompactDate = (date: string) => {
     weekday: parsed.toLocaleDateString('vi-VN', { weekday: 'short' }).toUpperCase(),
     day: parsed.getDate(),
   };
+};
+
+export const bookingStartDate = (date: string, startTime: string) =>
+  new Date(`${date}T${startTime}:00`);
+
+export const createBookingPass = (roomId: string) => {
+  const stamp = Date.now().toString(36).toUpperCase();
+  const nonce = Math.random().toString(36).slice(2, 7).toUpperCase();
+  return `VKU-${roomId}-${stamp}-${nonce}`;
+};
+
+export const createBookingId = () => `booking-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+
+export const getCurrentSlot = (now = new Date()) => {
+  const minutes = now.getHours() * 60 + now.getMinutes();
+  return timeSlots.find(
+    (slot) => minutes >= toMinutes(slot.startTime) && minutes < toMinutes(slot.endTime),
+  );
+};
+
+export const isRoomOccupiedNow = (
+  roomId: string,
+  baseOccupied: boolean,
+  bookings: Booking[],
+  now = new Date(),
+) => {
+  if (baseOccupied) return true;
+  const slot = getCurrentSlot(now);
+  return slot ? isSlotOccupied(roomId, formatDate(now), slot, bookings) : false;
 };

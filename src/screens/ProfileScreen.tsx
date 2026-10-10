@@ -10,12 +10,14 @@ const appInformation: { icon: IconName; label: string; value: string }[] = [
   { icon: 'school-outline', label: 'Ứng dụng', value: 'VKU Room Booking' },
   { icon: 'phone-portrait-outline', label: 'Nền tảng', value: 'React Native + Expo' },
   { icon: 'code-slash-outline', label: 'Dự án', value: 'Mini-Project 2' },
-  { icon: 'information-circle-outline', label: 'Chế độ', value: 'Demo / Local Data' },
+  { icon: 'save-outline', label: 'Lưu trữ', value: 'Zustand + AsyncStorage' },
+  { icon: 'notifications-outline', label: 'Nhắc lịch', value: 'Expo Notifications · trước 15 phút' },
 ];
 
 export default function ProfileScreen() {
+  const session = useBookingStore((state) => state.session);
   const activeBookings = useBookingStore(
-    (state) => state.bookings.filter((booking) => booking.status === 'CONFIRMED').length,
+    (state) => state.bookings.filter((booking) => booking.status !== 'CANCELLED').length,
   );
   const cancelledBookings = useBookingStore(
     (state) => state.bookings.filter((booking) => booking.status === 'CANCELLED').length,
@@ -29,9 +31,9 @@ export default function ProfileScreen() {
       </View>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.profileCard}>
-          <View style={styles.avatar}><Text style={styles.avatarText}>S</Text></View>
-          <Text style={styles.name}>Nguyễn Bá Thiện </Text>
-          <Text style={styles.caption}>0901234567 / thiennb@vku.udn.vn</Text>
+          <View style={styles.avatar}><Text style={styles.avatarText}>TB</Text></View>
+          <Text style={styles.name}>{session.name}</Text>
+          <Text style={styles.caption}>{session.studentId} · {session.email}</Text>
           <View style={styles.badge}>
             <Ionicons name="flask-outline" size={14} color="#1d4ed8" />
             <Text style={styles.badgeText}>Demo Mode</Text>
@@ -55,7 +57,7 @@ export default function ProfileScreen() {
           <View style={styles.noticeIcon}><Ionicons name="information-circle-outline" size={22} color="#1d4ed8" /></View>
           <View style={styles.noticeContent}>
             <Text style={styles.noticeTitle}>Chế độ Demo</Text>
-            <Text style={styles.noticeText}>Ứng dụng Mini-Project sử dụng dữ liệu cục bộ và không yêu cầu đăng nhập.</Text>
+            <Text style={styles.noticeText}>Phiên người dùng và booking được lưu cục bộ. Dữ liệu phòng là mock để demo quy trình realtime an toàn.</Text>
           </View>
         </View>
       </ScrollView>

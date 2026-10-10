@@ -1,4 +1,4 @@
-export type BookingStatus = 'CONFIRMED' | 'CANCELLED';
+export type BookingStatus = 'CONFIRMED' | 'CHECKED_IN' | 'CANCELLED';
 
 export interface Booking {
   id: string;
@@ -9,6 +9,8 @@ export interface Booking {
   startTime: string;
   endTime: string;
   status: BookingStatus;
+  passCode: string;
+  reminderId?: string;
   createdAt: string;
 }
 

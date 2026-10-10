@@ -2,18 +2,13 @@ import React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import type { Room } from '../types/room';
 
-const statusLabels = {
-  Available: 'Còn trống',
-  Occupied: 'Đang sử dụng',
-} as const;
-
 interface RoomCardProps {
   room: Room;
+  availableNow: boolean;
   onPress?: () => void;
 }
 
-function RoomCard({ room, onPress }: RoomCardProps) {
-  const isAvailable = room.status === 'Available';
+function RoomCard({ room, availableNow, onPress }: RoomCardProps) {
 
   return (
     <Pressable style={({ pressed }) => [styles.card, pressed && styles.cardPressed]} onPress={onPress} disabled={!onPress}>
@@ -26,7 +21,7 @@ function RoomCard({ room, onPress }: RoomCardProps) {
 
         <View style={styles.row}>
           <Text style={styles.icon}>⌂</Text>
-          <Text style={styles.detail}>{room.building}</Text>
+          <Text style={styles.detail}>{room.building} · Tầng {room.floor}</Text>
         </View>
 
         <View style={styles.row}>
@@ -34,15 +29,19 @@ function RoomCard({ room, onPress }: RoomCardProps) {
           <Text style={styles.detail}>{room.capacity} chỗ</Text>
         </View>
 
-        <View style={[styles.statusBadge, isAvailable ? styles.badgeAvailable : styles.badgeOccupied]}>
-          <Text style={[styles.statusDot, isAvailable ? styles.statusAvailable : styles.statusOccupied]}>●</Text>
+        <View style={styles.equipmentRow}>
+          {room.equipment.slice(0, 3).map((item) => <Text key={item} style={styles.equipment}>{item}</Text>)}
+        </View>
+
+        <View style={[styles.statusBadge, availableNow ? styles.badgeAvailable : styles.badgeOccupied]}>
+          <Text style={[styles.statusDot, availableNow ? styles.statusAvailable : styles.statusOccupied]}>●</Text>
           <Text
             style={[
               styles.status,
-              isAvailable ? styles.statusAvailable : styles.statusOccupied,
+              availableNow ? styles.statusAvailable : styles.statusOccupied,
             ]}
           >
-            {statusLabels[room.status]}
+            {availableNow ? 'Còn trống ngay' : 'Đang sử dụng'}
           </Text>
         </View>
       </View>
@@ -107,6 +106,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
     flexShrink: 1,
   },
+  equipmentRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 4 },
+  equipment: { backgroundColor: '#eef2ff', borderRadius: 5, color: '#4338ca', fontSize: 9, fontWeight: '600', paddingHorizontal: 5, paddingVertical: 2 },
   statusBadge: {
     alignSelf: 'flex-start',
     borderRadius: 20,

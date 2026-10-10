@@ -1,15 +1,26 @@
 {
   "expo": {
-    "name": "VKURoomBooking",
-    "slug": "VKURoomBooking",
+    "name": "VKU Room Booking",
+    "slug": "vku-room-booking",
+    "owner": "kabun",
+    "scheme": "vkuroombooking",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-notifications"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "package": "vn.edu.vku.buntk.roombooking",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -19,7 +30,14 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
+      "bundler": "metro",
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "639e42ed-aaf7-401b-a28c-1ee5644e7936"
+      }
     }
   }
 }

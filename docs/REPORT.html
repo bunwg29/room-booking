@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>VKU Room Booking — Technical Report</title>
+  <style>
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #dbe3ef; color: #172554; font-family: "Segoe UI", Arial, sans-serif; font-size: 10.4pt; line-height: 1.42; }
+    .page { width: 210mm; height: 297mm; margin: 0 auto 8mm; padding: 15mm 17mm 13mm; background: white; overflow: hidden; page-break-after: always; position: relative; }
+    .page:last-child { page-break-after: auto; }
+    .topline { height: 4px; background: linear-gradient(90deg, #2563eb, #38bdf8); margin: -15mm -17mm 10mm; }
+    .kicker { color: #2563eb; font-size: 9pt; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+    h1 { font-size: 27pt; line-height: 1.05; margin: 4mm 0 3mm; letter-spacing: -1px; }
+    h2 { color: #172554; font-size: 16pt; margin: 0 0 4mm; }
+    h3 { color: #1d4ed8; font-size: 11.5pt; margin: 4mm 0 2mm; }
+    p { margin: 0 0 3mm; }
+    a { color: #1d4ed8; text-decoration: none; }
+    .muted { color: #64748b; }
+    .hero { background: #111b3b; border-radius: 6mm; color: white; margin-top: 8mm; padding: 10mm; }
+    .hero h1 { color: white; }
+    .hero .muted { color: #bfdbfe; }
+    .identity { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 8mm; margin-top: 8mm; }
+    .identity div { border-bottom: 1px solid #dbeafe; padding-bottom: 2mm; }
+    .identity span { display: block; color: #64748b; font-size: 8pt; text-transform: uppercase; letter-spacing: .7px; }
+    .identity strong { display: block; margin-top: 1mm; }
+    .callout { background: #eff6ff; border-left: 4px solid #2563eb; border-radius: 2mm; padding: 3mm 4mm; margin: 4mm 0; }
+    table { border-collapse: collapse; width: 100%; font-size: 8.8pt; }
+    th { background: #172554; color: white; font-weight: 700; padding: 2.2mm; text-align: left; }
+    td { border-bottom: 1px solid #dbe3ef; padding: 2mm 2.2mm; vertical-align: top; }
+    .status { color: #15803d; font-weight: 800; white-space: nowrap; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+    .card { background: #f8fafc; border: 1px solid #dbe3ef; border-radius: 3mm; padding: 4mm; }
+    .flow { display: flex; align-items: stretch; gap: 2mm; margin: 4mm 0 6mm; }
+    .flow div { flex: 1; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 2mm; padding: 3mm 2mm; text-align: center; font-size: 8.5pt; font-weight: 700; }
+    .flow b { color: #2563eb; display: block; font-size: 14pt; }
+    pre { background: #111b3b; border-radius: 3mm; color: #dbeafe; font-family: Consolas, monospace; font-size: 8.6pt; line-height: 1.55; margin: 0; padding: 4mm; white-space: pre-wrap; }
+    ul, ol { margin: 2mm 0 3mm; padding-left: 5mm; }
+    li { margin-bottom: 1.5mm; }
+    .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; align-items: start; }
+    figure { margin: 0; }
+    figure img { display: block; border: 1px solid #cbd5e1; border-radius: 3mm; box-shadow: 0 2mm 5mm rgba(15,23,42,.12); margin: 0 auto; max-height: 205mm; max-width: 100%; }
+    figcaption { color: #475569; font-size: 8.6pt; line-height: 1.35; margin-top: 3mm; }
+    figcaption strong { color: #172554; }
+    .single-shot { display: grid; grid-template-columns: 72mm 1fr; gap: 8mm; align-items: start; }
+    .single-shot img { max-height: 190mm; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li { border-bottom: 1px solid #e2e8f0; padding: 2.2mm 0; }
+    .checklist li::before { color: #16a34a; content: "✓"; font-weight: 900; margin-right: 2mm; }
+    .footer { bottom: 7mm; color: #94a3b8; display: flex; font-size: 8pt; justify-content: space-between; left: 17mm; position: absolute; right: 17mm; }
+    @media print { body { background: white; } .page { margin: 0; } }
+  </style>
+</head>
+<body>
+  <section class="page">
+    <div class="topline"></div>
+    <div class="kicker">Cross-Platform Mobile App Development · VKU</div>
+    <div class="hero">
+      <div class="kicker" style="color:#7dd3fc">Mini-Project 2</div>
+      <h1>Real-time Study Room<br>Booking App</h1>
+      <p class="muted">Short Technical Report · React Native &amp; Expo</p>
+    </div>
+    <div class="identity">
+      <div><span>Student</span><strong>Tran Ka Bun</strong></div>
+      <div><span>Student ID</span><strong>23IT.B015</strong></div>
+      <div><span>Email</span><strong>buntk.23itb@vku.udn.vn</strong></div>
+      <div><span>Submission date</span><strong>10/10/2026</strong></div>
+      <div><span>Role</span><strong>Full-stack Mobile Developer</strong></div>
+      <div><span>Contribution</span><strong>100%</strong></div>
+    </div>
+
+    <h2 style="margin-top:9mm">1. Deliverable links</h2>
+    <div class="card">
+      <p><strong>GitHub:</strong> <a href="https://github.com/bunwg29/room-booking">github.com/bunwg29/room-booking</a></p>
+      <p><strong>APK:</strong> <code>builds/VKU-Room-Booking-v1.0.0.apk</code></p>
+      <p><strong>Install:</strong> <a href="https://expo.dev/accounts/kabun/projects/vku-room-booking/builds/eabbb550-9ce3-4218-9722-62859921829a">EAS Build eabbb550</a> · <strong>Video:</strong> <span class="muted">Not provided.</span></p>
+    </div>
+    <div class="callout"><strong>Scope note.</strong> All required on-device booking features are implemented. Room data and realtime availability are local demo data; multi-device sync requires a backend that is outside the supplied repository.</div>
+
+    <h2 style="margin-top:7mm">2. Feature implementation checklist</h2>
+    <table>
+      <thead><tr><th style="width:8mm">#</th><th style="width:57mm">Required feature</th><th style="width:22mm">Status</th><th>Implementation evidence</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Room discovery + FlatList</td><td class="status">Complete</td><td>12 typed rooms, responsive 1/2/3-column list, photos, capacity and live status.</td></tr>
+        <tr><td>2</td><td>Multi-parameter filters</td><td class="status">Complete</td><td>Search; status; buildings A/B/C/V; capacity 2–20; four equipment types.</td></tr>
+        <tr><td>3</td><td>7-day time-slot selector</td><td class="status">Complete</td><td>Seven dates and four discrete 2-hour slots.</td></tr>
+        <tr><td>4</td><td>Conflict prevention</td><td class="status">Complete</td><td>UI disabling plus store-level interval validation.</td></tr>
+        <tr><td>5</td><td>Booking pass + QR check-in</td><td class="status">Complete</td><td>Unique pass and real scannable QR payload.</td></tr>
+        <tr><td>6</td><td>Zustand + AsyncStorage</td><td class="status">Complete</td><td>Session, bookings, check-in and cancellation persist offline.</td></tr>
+        <tr><td>7</td><td>15-minute local reminder</td><td class="status">Complete</td><td>Native date trigger; reminder cancelled after check-in/cancellation.</td></tr>
+      </tbody>
+    </table>
+    <div class="footer"><span>VKU Room Booking</span><span>1 / 4</span></div>
+  </section>
+
+  <section class="page">
+    <div class="topline"></div>
+    <div class="kicker">Implementation</div>
+    <h2>3. Technical architecture</h2>
+    <div class="flow">
+      <div><b>1</b>Expo Router screens</div>
+      <div><b>2</b>React Query + services</div>
+      <div><b>3</b>Zustand actions</div>
+      <div><b>4</b>AsyncStorage + notifications</div>
+    </div>
+    <div class="grid2">
+      <div>
+        <h3>Project structure</h3>
+        <pre>src/
+├── app/          routes &amp; tabs
+├── components/   cards &amp; QR modal
+├── data/         room catalogue
+├── hooks/        React Query hooks
+├── screens/      feature screens
+├── services/     rules &amp; reminders
+├── store/        persisted Zustand
+└── types/        domain models</pre>
+      </div>
+      <div>
+        <h3>State flow</h3>
+        <p>Rooms load through a typed data-source boundary and React Query. A booking action enters the Zustand store, which rechecks conflicts, requests notification permission, persists the booking, then immediately updates every subscribed screen.</p>
+        <p>Static room occupancy and active local bookings are combined into derived “Available Now / Occupied” UI states.</p>
+      </div>
+    </div>
+    <h3>Conflict rule</h3>
+    <div class="callout"><code>sameRoom &amp;&amp; sameDate &amp;&amp; newStart &lt; existingEnd &amp;&amp; newEnd &gt; existingStart</code></div>
+    <p>The rule is applied both when painting disabled slots and again inside <code>addBooking</code>. This second guard prevents stale UI or rapid taps from inserting overlapping reservations.</p>
+
+    <h3>Booking lifecycle</h3>
+    <div class="grid2">
+      <div class="card"><strong>CONFIRMED</strong><br><span class="muted">Persist booking, generate pass, schedule reminder.</span></div>
+      <div class="card"><strong>CHECKED_IN / CANCELLED</strong><br><span class="muted">Persist transition and cancel scheduled reminder.</span></div>
+    </div>
+
+    <h2 style="margin-top:8mm">5. Technical challenges &amp; resolutions</h2>
+    <ol>
+      <li><strong>Reliable conflicts:</strong> UI-only disabling can become stale. The interval algorithm is centralized in a service and enforced again at the state boundary.</li>
+      <li><strong>Cross-platform notifications:</strong> native response APIs are not exposed on web. Platform guards preserve the browser demo, while Android/iOS use local date triggers and deep-link into the booking pass.</li>
+      <li><strong>Offline continuity:</strong> Zustand's persistence middleware serializes the minimum booking/session slice to AsyncStorage; denied notifications never invalidate a reservation.</li>
+    </ol>
+
+    <h3>Technology</h3>
+    <p>Expo SDK 57 · React Native 0.86 · TypeScript · Expo Router · Zustand · AsyncStorage · React Query · Reanimated · Expo Notifications · SVG QR</p>
+    <div class="footer"><span>Architecture &amp; engineering decisions</span><span>2 / 4</span></div>
+  </section>
+
+  <section class="page">
+    <div class="topline"></div>
+    <div class="kicker">Empirical evidence</div>
+    <h2>4. Application screenshots</h2>
+    <div class="shots">
+      <figure>
+        <img src="screenshots/01-room-discovery.png" alt="Room discovery screen">
+        <figcaption><strong>A. Room discovery.</strong> Search and four combinable filter rows sit above the virtualized list. Every card shows building, capacity, equipment, and current availability.</figcaption>
+      </figure>
+      <figure>
+        <img src="screenshots/02-room-detail.png" alt="Room detail screen">
+        <figcaption><strong>B. Reservation selector.</strong> Seven-day navigation and fixed two-hour slots. The action remains disabled until a valid slot is selected; occupied slots cannot be pressed.</figcaption>
+      </figure>
+    </div>
+    <div class="callout" style="margin-top:7mm"><strong>Viewport:</strong> Both screenshots were captured from the running Expo web build at 390 × 844 pixels, matching a modern mobile viewport.</div>
+    <div class="footer"><span>Running application · mobile viewport</span><span>3 / 4</span></div>
+  </section>
+
+  <section class="page">
+    <div class="topline"></div>
+    <div class="kicker">Evidence &amp; verification</div>
+    <h2>Persisted identity and quality checks</h2>
+    <div class="single-shot">
+      <figure><img src="screenshots/03-profile.png" alt="Student profile screen"></figure>
+      <div>
+        <h3>C. Student profile</h3>
+        <p>The app stores and displays the required identity:</p>
+        <p><strong>Tran Ka Bun</strong><br>23IT.B015<br>buntk.23itb@vku.udn.vn</p>
+        <p class="muted">Active and cancelled booking totals are derived directly from the persisted store.</p>
+
+        <h3 style="margin-top:7mm">Verification results</h3>
+        <ul class="checklist">
+          <li><code>npm run lint</code> — PASS</li>
+          <li><code>npm run typecheck</code> — PASS</li>
+          <li><code>npx expo-doctor</code> — 21/21 PASS</li>
+          <li><code>npx expo export --platform web</code> — PASS</li>
+          <li>Browser smoke test — PASS</li>
+        </ul>
+
+        <h3 style="margin-top:7mm">Acceptance summary</h3>
+        <p>Room discovery, filters, scheduling, conflict prevention, offline persistence, QR check-in, cancellation and local reminders are implemented. The app builds for Expo and the responsive web target.</p>
+
+        <h3 style="margin-top:7mm">Known limitation</h3>
+        <p>There is no authenticated backend or multi-device synchronization. A demo video remains a delivery item.</p>
+      </div>
+    </div>
+    <div class="footer"><span>Tran Ka Bun · 23IT.B015</span><span>4 / 4</span></div>
+  </section>
+</body>
+</html>
